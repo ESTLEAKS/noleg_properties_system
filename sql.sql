@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS `noleg_properties` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(191) NOT NULL,
+  `address` VARCHAR(191) DEFAULT NULL,
+  `price` BIGINT DEFAULT 0,
+  `shell` VARCHAR(191) DEFAULT NULL,
+  `ipl` VARCHAR(191) DEFAULT NULL,
+  `interact_points` JSON NULL,
+  `yard_zone` JSON NULL,
+  `entrance` JSON NULL,
+  `exit` JSON NULL,
+  `camdata` JSON NULL,
+  `owner` VARCHAR(191) DEFAULT NULL,
+  `meta` JSON NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
