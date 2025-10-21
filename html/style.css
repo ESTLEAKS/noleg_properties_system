@@ -1,0 +1,6 @@
+body{background:#071422;color:#dff0f6;font-family:Arial;margin:0;height:100vh}
+.app{display:flex;align-items:center;justify-content:center;height:100%}
+.panel{width:720px;padding:18px;background:#051523;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.6)}
+input,select,textarea{width:100%;padding:8px;margin:6px 0;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:#071a20;color:#dff0f6}
+.buttons{display:flex;gap:8px;margin-top:10px}
+button{padding:8px 12px;border-radius:6px;border:0;background:#10b981;color:#051017;cursor:pointer}
