@@ -1,0 +1,47 @@
+-- server side: expose shells and handle shell requests
+local Shells = nil
+-- load shells.lua (shells.lua returns the table)
+local shellFile = LoadResourceFile(GetCurrentResourceName(), 'shells.lua')
+if shellFile then
+  local f, err = load(shellFile)
+  if f then
+    local ok, ret = pcall(f)
+    if ok and type(ret) == 'table' then Shells = ret end
+  end
+end
+if not Shells then Shells = {} end
+
+RegisterNetEvent('noleg_esx:requestShells')
+AddEventHandler('noleg_esx:requestShells', function()
+  local src = source
+  local list = {}
+  for id, v in pairs(Shells) do
+    table.insert(list, { id = id, label = v.label })
+  end
+  TriggerClientEvent('noleg_esx:sendShells', src, list)
+end)
+
+RegisterNetEvent('noleg_esx:requestShellData')
+AddEventHandler('noleg_esx:requestShellData', function(propertyId)
+  local src = source
+  local prop = nil
+  for _, p in ipairs(Properties) do
+    if tonumber(p.id) == tonumber(propertyId) then prop = p; break end
+  end
+  if not prop then return end
+  local shellDef = Shells[prop.shell]
+  if shellDef then
+    TriggerClientEvent('noleg_esx:spawnShellForClient', src, shellDef)
+  end
+end)
+
+-- server-side open editor trigger for admin players
+RegisterNetEvent('noleg_esx:openEditorForSource')
+AddEventHandler('noleg_esx:openEditorForSource', function()
+  local src = source
+  if src == 0 or not Config.AdminOnly or Config.IsAdmin(src) then
+    TriggerClientEvent('noleg_esx:openEditor', src)
+  else
+    TriggerClientEvent('chat:addMessage', src, { args = { '[Property]', 'Permission denied.' } })
+  end
+end)
